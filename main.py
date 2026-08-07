@@ -15,8 +15,8 @@ BOT_TOKEN = os.environ.get("BOT_TOKEN")
 # /start command handler
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        [InlineKeyboardButton("📢 Join Channel", url="https://t.me/your_channel")],
-        [InlineKeyboardButton("🎬 Movie Channel", url="https://t.me/your_movie_channel")]
+        [InlineKeyboardButton("📢 Join Channel", url="https://t.me/FlickZoneMyanmar")],
+        [InlineKeyboardButton("🎬 Movie Channel", url="https://t.me/+pV13D8TnhDoxOTQ1")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
@@ -55,7 +55,7 @@ async def publish(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     keyboard = [
         [InlineKeyboardButton("🔄 GET FILE AGAIN!", callback_data="get_file")],
-        [InlineKeyboardButton("📢 Channel Link", url="https://t.me/your_channel")]
+        [InlineKeyboardButton("📢 Channel Link", url="https://t.me/+pV13D8TnhDoxOTQ1")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
