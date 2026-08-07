@@ -28,8 +28,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             
             keyboard = [
-                [InlineKeyboardButton("📢 Join Channel", url="https://t.me/+pV13D8Tnh...")],
-                [InlineKeyboardButton("🎬 Movie Channel", url="https://t.me/+pV13D8Tnh...")]
+                [InlineKeyboardButton("📢 Join Channel", url="https://t.me/FlickZoneMyanmar")],
+                [InlineKeyboardButton("🎬 Movie Channel", url="https://t.me/+pV13D8TnhDoxOTQ1")]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             
@@ -55,8 +55,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             return
 
     keyboard = [
-        [InlineKeyboardButton("📢 Join Channel", url="https://t.me/+pV13D8Tnh...")],
-        [InlineKeyboardButton("🎬 Movie Channel", url="https://t.me/+pV13D8Tnh...")]
+        [InlineKeyboardButton("📢 Join Channel", url="https://t.me/FlickZoneMyanmar")],
+        [InlineKeyboardButton("🎬 Movie Channel", url="https://t.me/+pV13D8TnhDoxOTQ1")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
