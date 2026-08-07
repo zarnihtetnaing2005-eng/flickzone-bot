@@ -2,7 +2,7 @@ import os
 import logging
 import asyncio
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+from telegram.ext import Application, CommandHandler, ContextTypes
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -10,18 +10,15 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
-
-# ရုပ်ရှင်အချက်အလက်များကို သိမ်းဆည်းရန် ယာယီ Dictionary (Database သဖွယ် အသုံးပြုရန်)
 MOVIES_DB = {}
 
-# /start command handler (Deep Linking support အပါအဝင်)
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     args = context.args
     if args:
         movie_id = args[0]
         if movie_id in MOVIES_DB:
             movie = MOVIES_DB[movie_id]
-            disclaimer = "\n\n⚠️ သတိပြုရန် - ဤဇာတ်ကားဖိုင်သည် ၅ မိနစ်အတွင်း အလိုအလျောက် ပျက်သွားမည် ဖြစ်ပါသည်။ ပျောက်ဆုံးသွားခြင်း မရှိစေရန်အတွက် မိမိ၏ 'Saved Messages' တွင် သိမ်းထားပေးပါခင်ဗျာ。"
+            disclaimer = "\n\n⚠️ သတိပြုရန် - ဤဇာတ်ကားဖိုင်သည် ၅ မိနစ်အတွင်း အလိုအလျောက် ပျက်သွားမည် ဖြစ်ပါသည်။ ပျောက်ဆုံးသွားခြင်း မရှိစေရန်အတွက် မိမိ၏ 'Saved Messages' တွင် သိမ်းထားပေးပါခင်ဗျာ။"
             
             caption = (
                 f"🎬 **{movie['title']}**\n\n"
@@ -31,12 +28,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             
             keyboard = [
-                [InlineKeyboardButton("📢 Join Channel", url="https://t.me/FlickZoneMyanmar")],
-                [InlineKeyboardButton("🎬 Movie Channel", url="https://t.me/+pV13D8TnhDoxOTQ1")]
+                [InlineKeyboardButton("📢 Join Channel", url="https://t.me/+pV13D8Tnh...")],
+                [InlineKeyboardButton("🎬 Movie Channel", url="https://t.me/+pV13D8Tnh...")]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             
-            # ဗီဒီယိုဖိုင်နှင့် ပုံ (သို့) ဗီဒီယို သီးသန့် ပို့ခြင်း
             sent_message = await context.bot.send_video(
                 chat_id=update.effective_chat.id,
                 video=movie['file_id'],
@@ -45,7 +41,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 parse_mode="Markdown"
             )
             
-            # ၅ မိနစ် (၃၀၀ စက္ကန့်) ပြီးလျှင် အလိုအလျောက် ဖျက်မည့် Task
             async def delete_later():
                 await asyncio.sleep(300)
                 try:
@@ -60,8 +55,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             return
 
     keyboard = [
-        [InlineKeyboardButton("📢 Join Channel", url="https://t.me/FlickZoneMyanmar")],
-        [InlineKeyboardButton("🎬 Movie Channel", url="https://t.me/+pV13D8TnhDoxOTQ1")]
+        [InlineKeyboardButton("📢 Join Channel", url="https://t.me/+pV13D8Tnh...")],
+        [InlineKeyboardButton("🎬 Movie Channel", url="https://t.me/+pV13D8Tnh...")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
@@ -71,15 +66,20 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
     await update.message.reply_text(welcome_message, reply_markup=reply_markup)
 
-# /publish command handler (Admin များအတွက် ဇာတ်ကားတင်ရန်)
 async def publish(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message = update.message
     reply_message = message.reply_to_message
 
-    if not reply_message or not reply_message.video:
+    if not reply_message:
+        await update.message.reply_text("ကျေးဇူးပြု၍ ဗီဒီယိုဖိုင်ကို Reply လုပ်ပါ။")
+        return
+
+    # Forward လုပ်ထားသော ဗီဒီယို သို့မဟုတ် ပုံမှန် ဗီဒီယို ဟုတ်မဟုတ် စစ်ဆေးခြင်း
+    video = reply_message.video or reply_message.document
+    if not video:
         await update.message.reply_text(
-            "ကျေးဇူးပြု၍ ဗီဒီယိုဖိုင်ကို Reply လုပ်ပြီး အောက်ပါ ပုံစံအတိုင်း ပို့ပေးပါ:\n"
-            "/publish Movie_ID | Title | Genre | Synopsis"
+            "❌ ကျေးဇူးပြု၍ ဗီဒီယိုဖိုင်ကိုသာ Reply လုပ်ပေးပါ။ (Document သို့မဟုတ် Video ဖြစ်ရပါမည်)\n\n"
+            "ပုံစံ - /publish Movie_ID | Title | Genre | Synopsis"
         )
         return
 
@@ -87,7 +87,7 @@ async def publish(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not args or "|" not in " ".join(args):
         await update.message.reply_text(
             "ပုံစံမမှန်ပါ။ ဤကဲ့သို့ ပို့ပေးပါ:\n"
-            "/publish movie123 | Title | Genre | Synopsis"
+            "/publish Movie_1 | Title | Genre | Synopsis"
         )
         return
 
@@ -98,9 +98,8 @@ async def publish(update: Update, context: ContextTypes.DEFAULT_TYPE):
     title = parts[1] if len(parts) > 1 else "Movie Title"
     genre = parts[2] if len(parts) > 2 else "Action"
     synopsis = parts[3] if len(parts) > 3 else "ဇာတ်လမ်းအကျဉ်း..."
-    video_file_id = reply_message.video.file_id
+    video_file_id = video.file_id
 
-    # ဇာတ်ကားအချက်အလက်များကို Database ထဲ သိမ်းဆည်းမည်
     MOVIES_DB[movie_id] = {
         "title": title,
         "genre": genre,
@@ -132,4 +131,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
