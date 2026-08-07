@@ -113,7 +113,7 @@ async def publish(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "file_id": video_file_id
     }
 
-    deep_link = f"https://t.me/{@FlickZoneOfficial_bot}?start={movie_id}"
+    deep_link = f"https://t.me/FlickZoneOfficial_bot?start={movie_id}"
 
     await update.message.reply_text(
         f"✅ ဇာတ်ကား အောင်မြင်စွာ တင်ပြီးပါပြီ!\n\n"
