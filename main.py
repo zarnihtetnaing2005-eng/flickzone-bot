@@ -122,7 +122,7 @@ async def publish(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 def main():
-    if not BOT_TOKEN:
+    if not BOT_TOKEN:8669551565:AAH2NvjXyHWL-C13vakXwpzjg6t9R8_grvg
         logger.error("BOT_TOKEN environment variable not found!")
         return
 
