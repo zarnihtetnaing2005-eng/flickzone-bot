@@ -16,7 +16,7 @@ JOIN_CHANNEL_URL = "https://t.me/FlickZoneMyanmar"      # မိမိ Channel L
 MOVIE_CHANNEL_URL = "https://t.me/+pV13D8TnhDoxOTQ1"     # မိမိ Movie Channel Link ထည့်ပါ
 
 # BotFather တွင် တွေ့ရသော Bot Username အမှန်
-BOT_USERNAME = "FlickZoneOfficial_bot"
+BOT_USERNAME = "@FlickZoneOfficial_bot"
 
 # ရုပ်ရှင်အချက်အလက်များ သိမ်းဆည်းရန် Database
 MOVIES_DB = {}
@@ -113,7 +113,7 @@ async def publish(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "file_id": video_file_id
     }
 
-    deep_link = f"https://t.me/{BOT_USERNAME}?start={movie_id}"
+    deep_link = f"https://t.me/{@FlickZoneOfficial_bot}?start={movie_id}"
 
     await update.message.reply_text(
         f"✅ ဇာတ်ကား အောင်မြင်စွာ တင်ပြီးပါပြီ!\n\n"
