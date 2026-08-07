@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 
 # ⚠️ အောက်ပါနေရာနှစ်ခုတွင် မိမိ၏ တကယ့် Telegram Channel Link အမှန်များကို အစားထိုးပါ
-JOIN_CHANNEL_URL = "https://t.me/FlickZoneMyanmar"      # မိမိ Channel Link ထည့်ပါ
-MOVIE_CHANNEL_URL = "https://t.me/+pV13D8TnhDoxOTQ1"     # မိမိ Movie Channel Link ထည့်ပါ
+(JOIN_CHANNEL_URL = "https://t.me/FlickZoneMyanmar")      # မိမိ Channel Link ထည့်ပါ
+(MOVIE_CHANNEL_URL = "https://t.me/+pV13D8TnhDoxOTQ1")     # မိမိ Movie Channel Link ထည့်ပါ
 
 # BotFather တွင် တွေ့ရသော Bot Username အမှန်
 BOT_USERNAME = "FlickZoneOfficial_bot"
