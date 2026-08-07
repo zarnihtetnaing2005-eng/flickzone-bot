@@ -115,6 +115,7 @@ async def publish(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     deep_link = f"https://t.me/FlickZoneOfficial_bot?start={movie_id}"
 
+
     await update.message.reply_text(
         f"✅ ဇာတ်ကား အောင်မြင်စွာ တင်ပြီးပါပြီ!\n\n"
         f"🔗 **Deep Link:** {deep_link}",
@@ -122,7 +123,7 @@ async def publish(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 def main():
-    if not BOT_TOKEN:8669551565:AAH2NvjXyHWL-C13vakXwpzjg6t9R8_grvg
+    if BOT_TOKEN:8669551565:AAH2NvjXyHWL-C13vakXwpzjg6t9R8_grvg
         logger.error("BOT_TOKEN environment variable not found!")
         return
 
