@@ -10,6 +10,15 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
+
+# ⚠️ အောက်ပါနေရာနှစ်ခုတွင် မိမိ၏ တကယ့် Telegram Channel Link အမှန်များကို အစားထိုးပါ
+JOIN_CHANNEL_URL = "https://t.me/flickzonemovies"      # မိမိ Channel Link ထည့်ပါ
+MOVIE_CHANNEL_URL = "https://t.me/flickzonemovies"     # မိမိ Movie Channel Link ထည့်ပါ
+
+# BotFather တွင် တွေ့ရသော Bot Username အမှန်
+BOT_USERNAME = "FlickZoneOfficial_bot"
+
+# ရုပ်ရှင်အချက်အလက်များ သိမ်းဆည်းရန် Database
 MOVIES_DB = {}
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -28,8 +37,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             
             keyboard = [
-                [InlineKeyboardButton("📢 Join Channel", url="https://t.me/FlickZoneMyanmar")],
-                [InlineKeyboardButton("🎬 Movie Channel", url="https://t.me/+pV13D8TnhDoxOTQ1")]
+                [InlineKeyboardButton("📢 Join Channel", url=https://t.me/FlickZoneMyanmar)],
+                [InlineKeyboardButton("🎬 Movie Channel", url=https://t.me/+pV13D8TnhDoxOTQ1)]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             
@@ -41,6 +50,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 parse_mode="Markdown"
             )
             
+            # ၅ မိနစ် (၃၀၀ စက္ကန့်) ပြီးလျှင် အလိုအလျောက် ဖျက်မည့် စနစ်
             async def delete_later():
                 await asyncio.sleep(300)
                 try:
@@ -55,8 +65,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             return
 
     keyboard = [
-        [InlineKeyboardButton("📢 Join Channel", url="https://t.me/FlickZoneMyanmar")],
-        [InlineKeyboardButton("🎬 Movie Channel", url="https://t.me/+pV13D8TnhDoxOTQ1")]
+        [InlineKeyboardButton("📢 Join Channel", url=https://t.me/FlickZoneMyanmar)],
+        [InlineKeyboardButton("🎬 Movie Channel", url=https://t.me/+pV13D8TnhDoxOTQ1)]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
@@ -71,22 +81,18 @@ async def publish(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_message = message.reply_to_message
 
     if not reply_message:
-        await update.message.reply_text("ကျေးဇူးပြု၍ ဗီဒီယိုဖိုင်ကို Reply လုပ်ပါ။")
+        await update.message.reply_text("❌ ကျေးဇူးပြု၍ ဗီဒီယိုဖိုင်ကို Reply လုပ်ပြီး /publish မိန့်ခွန်းကို ပို့ပေးပါ။")
         return
 
-    # Forward လုပ်ထားသော ဗီဒီယို သို့မဟုတ် ပုံမှန် ဗီဒီယို ဟုတ်မဟုတ် စစ်ဆေးခြင်း
     video = reply_message.video or reply_message.document
     if not video:
-        await update.message.reply_text(
-            "❌ ကျေးဇူးပြု၍ ဗီဒီယိုဖိုင်ကိုသာ Reply လုပ်ပေးပါ။ (Document သို့မဟုတ် Video ဖြစ်ရပါမည်)\n\n"
-            "ပုံစံ - /publish Movie_ID | Title | Genre | Synopsis"
-        )
+        await update.message.reply_text("❌ ကျေးဇူးပြု၍ ဗီဒီယို သို့မဟုတ် ဖိုင်ကိုသာ Reply လုပ်ပေးပါ။")
         return
 
     args = context.args
     if not args or "|" not in " ".join(args):
         await update.message.reply_text(
-            "ပုံစံမမှန်ပါ။ ဤကဲ့သို့ ပို့ပေးပါ:\n"
+            "❌ ပုံစံမမှန်ပါ။ ဤကဲ့သို့ ပို့ပေးပါ:\n"
             "/publish Movie_1 | Title | Genre | Synopsis"
         )
         return
@@ -107,8 +113,7 @@ async def publish(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "file_id": video_file_id
     }
 
-    bot_username = context.bot.username
-    deep_link = f"https://t.me/{bot_username}?start={movie_id}"
+    deep_link = f"https://t.me/{BOT_USERNAME}?start={movie_id}"
 
     await update.message.reply_text(
         f"✅ ဇာတ်ကား အောင်မြင်စွာ တင်ပြီးပါပြီ!\n\n"
